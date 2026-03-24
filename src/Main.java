@@ -16,42 +16,38 @@ public class Main {
             System.out.println("1. Add Student");
             System.out.println("2. Allocate Room");
             System.out.println("3. View Rooms");
-            System.out.println("4. Exit");
-
+            System.out.println("4. View Students");
+            System.out.println("5. Exit");
             System.out.print("Enter choice: ");
             int choice = sc.nextInt();
 
             switch (choice) {
-                case 1:
-                    System.out.print("Enter Student ID: ");
-                    int id = sc.nextInt();
-                    sc.nextLine(); // clear buffer
-                    System.out.print("Enter Name: ");
-                    String name = sc.nextLine();
 
-                    Student s = new Student(id, name);
-                    manager.addStudent(s);
-                    break;
+             case 1:
+                Student s = new Student(name, id, "CSE");
+                manager.addStudent(s);
+                System.out.println("Student added successfully.");
 
-                case 2:
-                    if (manager.students.size() > 0) {
-                        Student lastStudent = manager.students.get(manager.students.size() - 1);
-                        manager.allocateRoom(lastStudent);
-                    } else {
-                        System.out.println("No students available.");
-                    }
-                    break;
+             case 2:
+                System.out.print("Enter Student ID to allocate room: ");
+                int sid = sc.nextInt();
+                manager.allocateRoom(sid);
+                break;
 
-                case 3:
-                    manager.displayRooms();
-                    break;
+             case 3:
+                manager.viewRooms();
+                break;
 
-                case 4:
-                    System.out.println("Exiting...");
-                    return;
+             case 4:
+                manager.viewStudents();   // 👈 THIS IS NEW
+                break;
 
-                default:
-                    System.out.println("Invalid choice");
+             case 5:
+                System.out.println("Exiting...");
+                return;
+
+             default:
+                System.out.println("Invalid choice.");
             }
         }
     }

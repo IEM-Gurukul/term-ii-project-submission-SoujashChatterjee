@@ -5,10 +5,21 @@ public class HostelManager {
     ArrayList<Student> students = new ArrayList<>();
     ArrayList<Room> rooms = new ArrayList<>();
 
-    public void addStudent(Student s) {
-        students.add(s);
-        System.out.println("Student added successfully.");
-    }
+    void addStudent(Student s) {
+     students.add(s);
+
+     // allocate room immediately
+     for (Room r : rooms) {
+        if (!r.isOccupied) {
+            r.isOccupied = true;
+            s.setRoom(r.roomNumber);
+
+            System.out.println("Room allocated: " + r.roomNumber);
+            return;
+        }
+     }
+     System.out.println("No rooms available for allocation.");
+ }
 
     public void addRoom(Room r) {
         rooms.add(r);
@@ -27,22 +38,54 @@ public class HostelManager {
         }
     }
 
-    public void allocateRoom(Student s) {
+    void allocateRoom(int studentId) {
+     for (Student s : students) {
+        if (s.getId() == studentId) {
 
-       if (s.hasRoom) {
-        System.out.println(s.name + " already has a room assigned.");
-        return;
-       }
+            for (Room r : rooms) {
+                if (!r.isOccupied) {
+                    r.isOccupied = true;
+                    s.setRoom(r.roomNumber);
+                    System.out.println("Room allocated: " + r.roomNumber);
+                    return;
+                }
+            }
 
-       for (Room r : rooms) {
-        if (!r.isOccupied) {
-            r.isOccupied = true;
-            s.hasRoom = true;
-            System.out.println("Allocated Room " + r.roomNumber + " to " + s.name);
+            System.out.println("No rooms available.");
             return;
         }
      }
 
-     System.out.println("No rooms available for " + s.name);
+     System.out.println("Student not found.");
+   }
+        
+    void viewStudents() {
+     if (students.isEmpty()) {
+        System.out.println("No students found.");
+        return;
+     }
+
+     for (Student s : students) {
+        s.displayInfo();
+     }
+    }
+
+    void viewRooms() {
+     if (rooms.isEmpty()) {
+        System.out.println("No rooms available.");
+        return;
+     }
+
+     for (Room r : rooms) {
+        r.displayRoomDetails();
+
+        if (r.isOccupied) {
+            System.out.println("Status: Occupied");
+        } else {
+            System.out.println("Status: Available");
+        }
+
+        System.out.println("----------------------");
+     }
     }
 }
