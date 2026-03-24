@@ -1,6 +1,7 @@
 public class Student {
     int id;
     String name;
+    boolean hasRoom = false;
 
     public Student(int id, String name) {
         this.id = id;
