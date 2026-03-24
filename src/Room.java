@@ -1,6 +1,7 @@
 public class Room {
     int roomNumber;
     int capacity;
+    boolean isOccupied = false;
 
     public Room(int roomNumber, int capacity) {
         this.roomNumber = roomNumber;
@@ -8,6 +9,8 @@ public class Room {
     }
 
     public void displayRoomDetails() {
-        System.out.println("Room No: " + roomNumber + ", Capacity: " + capacity);
+        System.out.println("Room No: " + roomNumber + 
+                           ", Capacity: " + capacity + 
+                           ", Occupied: " + isOccupied);
     }
 }

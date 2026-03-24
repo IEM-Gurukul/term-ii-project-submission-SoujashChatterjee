@@ -27,3 +27,14 @@ public class HostelManager {
         }
     }
 }
+
+    public void allocateRoom(Student s) {
+     for (Room r : rooms) {
+        if (!r.isOccupied) {
+            r.isOccupied = true;
+            System.out.println("Allocated Room " + r.roomNumber + " to " + s.name);
+            return;
+        }
+     }
+     System.out.println("No rooms available for " + s.name);
+    }
