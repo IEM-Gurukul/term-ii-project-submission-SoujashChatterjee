@@ -1,16 +1,34 @@
-public class Room {
-    int roomNumber;
-    int capacity;
-    boolean isOccupied = false;
+import java.util.ArrayList;
+
+class Room {
+    protected int roomNumber;
+    protected int capacity;
+    protected ArrayList<Student> students;
 
     public Room(int roomNumber, int capacity) {
         this.roomNumber = roomNumber;
         this.capacity = capacity;
+        this.students = new ArrayList<>();
     }
 
-    public void displayRoomDetails() {
-        System.out.println("Room No: " + roomNumber + 
-                           ", Capacity: " + capacity + 
-                           ", Occupied: " + isOccupied);
+    boolean isFull() {
+        return students.size() >= capacity;
+    }
+
+    void addStudent(Student s) {
+        if (!isFull()) {
+            students.add(s);
+            s.setRoom(roomNumber);
+        }
+    }
+
+    void removeStudent(Student s) {
+        students.remove(s);
+    }
+
+    void displayRoomDetails() {
+        System.out.println("Room No: " + roomNumber);
+        System.out.println("Capacity: " + capacity);
+        System.out.println("Occupied: " + students.size());
     }
 }

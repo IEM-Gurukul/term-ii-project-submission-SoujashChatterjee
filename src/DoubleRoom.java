@@ -1,11 +1,11 @@
-public class DoubleRoom extends Room {
-
+class DoubleRoom extends Room {
     public DoubleRoom(int roomNumber) {
         super(roomNumber, 2);
     }
 
     @Override
-    public void displayRoomDetails() {
+    void displayRoomDetails() {
         System.out.println("Double Room - Room No: " + roomNumber);
+        System.out.println("Capacity: 2 | Occupied: " + students.size());
     }
 }

@@ -4,7 +4,7 @@ class Student extends Person {
     private int roomNumber;
 
     public Student(String name, int id, String department) {
-        super(name, id);   // calls Person constructor
+        super(name, id);   
         this.department = department;
         this.roomNumber = -1;
     }

@@ -6,7 +6,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         HostelManager manager = new HostelManager();
 
-        // Pre-added rooms
+        
         manager.addRoom(new SingleRoom(101));
         manager.addRoom(new DoubleRoom(102));
         manager.addRoom(new TripleRoom(103));
@@ -24,14 +24,22 @@ public class Main {
             switch (choice) {
 
              case 1:
-                Student s = new Student(name, id, "CSE");
-                manager.addStudent(s);
-                System.out.println("Student added successfully.");
+                System.out.print("Enter Student ID: ");
+                int id = sc.nextInt();
 
+                System.out.print("Enter Name: ");
+                String name = sc.next();
+
+                Student s = new Student(name, id, "CSE");
+
+                manager.addStudent(s);
+
+                System.out.println("Student added successfully.");
+                break;
              case 2:
                 System.out.print("Enter Student ID to allocate room: ");
                 int sid = sc.nextInt();
-                manager.allocateRoom(sid);
+            
                 break;
 
              case 3:
@@ -39,7 +47,7 @@ public class Main {
                 break;
 
              case 4:
-                manager.viewStudents();   // 👈 THIS IS NEW
+                manager.viewStudents();   
                 break;
 
              case 5:
