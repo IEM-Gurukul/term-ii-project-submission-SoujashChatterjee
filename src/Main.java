@@ -6,8 +6,6 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         HostelManager manager = new HostelManager();
 
-        FileHandler.loadStudents(manager.students);
-
         Floor f1 = new Floor(1);
         Floor f2 = new Floor(2);
         Floor f3 = new Floor(3);
@@ -28,13 +26,19 @@ public class Main {
         manager.addFloor(f2);
         manager.addFloor(f3);
 
+        FileHandler.loadStudents(manager.students, manager.floors);
+
         while (true) {
 
-            System.out.println("\n===== HOSTEL SYSTEM =====");
+            System.out.println("\n=================================");
+            System.out.println("     HOSTEL MANAGEMENT SYSTEM");
+            System.out.println("=================================");
             System.out.println("1. Add Student");
             System.out.println("2. View Rooms");
             System.out.println("3. View Students");
-            System.out.println("4. Exit");
+            System.out.println("4. Clear All Data");
+            System.out.println("5. Exit");
+            System.out.print("Enter choice: ");
 
             int choice;
 
@@ -49,35 +53,71 @@ public class Main {
             switch (choice) {
 
                 case 1:
-                    System.out.print("Enter Student ID: ");
+
                     int id;
 
-                    try {
-                        id = sc.nextInt();
-                    } catch (Exception e) {
-                        System.out.println("Invalid ID!");
-                        sc.next();
-                        break;
+                    while (true) {
+                        System.out.print("Enter Student ID: ");
+
+                        try {
+                            id = sc.nextInt();
+                        } catch (Exception e) {
+                            System.out.println("Invalid ID!");
+                            sc.next();
+                            continue;
+                        }
+
+                        if (manager.isDuplicateId(id)) {
+                            System.out.println("Student with this ID already exists.");
+                        } else {
+                            break;
+                        }
                     }
 
-                    System.out.print("Enter Name: ");
-                    String name = sc.next();
+                    String name;
 
-                    System.out.println("Select Department:");
-                    System.out.println("1. CSE");
-                    System.out.println("2. Mechanical");
-                    System.out.println("3. Electrical");
-                    System.out.println("4. Electronics");
+                    while (true) {
+                        System.out.print("Enter Name: ");
+                        name = sc.next();
 
-                    int deptChoice = sc.nextInt();
+                        if (name.matches("[a-zA-Z]+")) {
+                            break;
+                        } else {
+                            System.out.println("Invalid name! Only alphabets allowed.");
+                        }
+                    }
+
                     String dept;
 
-                    switch (deptChoice) {
-                        case 1: dept = "CSE"; break;
-                        case 2: dept = "Mechanical"; break;
-                        case 3: dept = "Electrical"; break;
-                        case 4: dept = "Electronics"; break;
-                        default: dept = "CSE";
+                    while (true) {
+                        System.out.println("\nSelect Department:");
+                        System.out.println("1. CSE");
+                        System.out.println("2. Mechanical");
+                        System.out.println("3. Electrical");
+                        System.out.println("4. Electronics");
+                        System.out.println("0. None");
+
+                        int deptChoice;
+
+                        try {
+                            deptChoice = sc.nextInt();
+                        } catch (Exception e) {
+                            System.out.println("Invalid input!");
+                            sc.next();
+                            continue;
+                        }
+
+                        switch (deptChoice) {
+                            case 1: dept = "CSE"; break;
+                            case 2: dept = "Mechanical"; break;
+                            case 3: dept = "Electrical"; break;
+                            case 4: dept = "Electronics"; break;
+                            case 0: dept = "-"; break;
+                            default:
+                                System.out.println("Invalid choice!");
+                                continue;
+                        }
+                        break;
                     }
 
                     System.out.print("Enter Preference (Single/Double/Triple): ");
@@ -105,9 +145,18 @@ public class Main {
                     break;
 
                 case 4:
+                    manager.clearAllData();
+                    FileHandler.clearData();
+                    break;
+
+                case 5:
                     FileHandler.saveStudents(manager.students);
                     System.out.println("Data saved. Exiting...");
+                    sc.close();
                     return;
+
+                default:
+                    System.out.println("Invalid choice.");
             }
         }
     }

@@ -26,12 +26,17 @@ class Student extends Person {
     public void setRoom(int roomNumber) {
         this.roomNumber = roomNumber;
     }
-
+    public String getDepartment() {
+        return department;
+   }
     public int getRoomNumber() {
         return roomNumber;
     }
 
     public String getPreference() {
         return preference;
+    }
+    public String getName() {
+        return name;
     }
 }

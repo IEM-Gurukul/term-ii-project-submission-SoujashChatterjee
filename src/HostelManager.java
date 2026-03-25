@@ -21,11 +21,6 @@ class HostelManager {
 
     void addStudent(Student s) {
 
-        if (isDuplicateId(s.getId())) {
-            System.out.println("Student with this ID already exists.");
-            return;
-        }
-
         students.add(s);
 
         ArrayList<Room> preferredRooms = new ArrayList<>();
@@ -83,8 +78,25 @@ class HostelManager {
     }
 
     void viewStudents() {
+        if (students.isEmpty()) {
+            System.out.println("No students found.");
+            return;
+        }
+
         for (Student s : students) {
             s.displayInfo();
         }
+    }
+
+    void clearAllData() {
+        students.clear();
+
+        for (Floor f : floors) {
+            for (Room r : f.rooms) {
+                r.students.clear();
+            }
+        }
+
+        System.out.println("Memory cleared.");
     }
 }
