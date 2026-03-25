@@ -5,7 +5,7 @@ class SingleRoom extends Room {
 
     @Override
     void displayRoomDetails() {
-        System.out.println("Single Room - Room No: " + roomNumber);
-        System.out.println("Capacity: 1 | Occupied: " + students.size());
+        System.out.println("Single Room - Room No: " + roomNumber +
+                " | Occupied: " + students.size() + "/1");
     }
 }

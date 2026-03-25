@@ -16,10 +16,8 @@ class Room {
     }
 
     void addStudent(Student s) {
-        if (!isFull()) {
-            students.add(s);
-            s.setRoom(roomNumber);
-        }
+        students.add(s);
+        s.setRoom(roomNumber);
     }
 
     void removeStudent(Student s) {

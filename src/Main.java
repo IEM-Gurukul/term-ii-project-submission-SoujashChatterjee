@@ -6,56 +6,57 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         HostelManager manager = new HostelManager();
 
-        
-        manager.addRoom(new SingleRoom(101));
-        manager.addRoom(new DoubleRoom(102));
-        manager.addRoom(new TripleRoom(103));
+        Floor f1 = new Floor(1);
+        Floor f2 = new Floor(2);
+
+        f1.addRoom(new SingleRoom(101));
+        f1.addRoom(new DoubleRoom(102));
+        f1.addRoom(new TripleRoom(103));
+
+        f2.addRoom(new SingleRoom(201));
+        f2.addRoom(new DoubleRoom(202));
+        f2.addRoom(new TripleRoom(203));
+
+        manager.addFloor(f1);
+        manager.addFloor(f2);
 
         while (true) {
-            System.out.println("\n--- Hostel Management System ---");
+            System.out.println("\n===== HOSTEL MANAGEMENT SYSTEM =====");
             System.out.println("1. Add Student");
-            System.out.println("2. Allocate Room");
-            System.out.println("3. View Rooms");
-            System.out.println("4. View Students");
-            System.out.println("5. Exit");
-            System.out.print("Enter choice: ");
+            System.out.println("2. View Rooms");
+            System.out.println("3. View Students");
+            System.out.println("4. Exit");
+
             int choice = sc.nextInt();
 
             switch (choice) {
 
-             case 1:
-                System.out.print("Enter Student ID: ");
-                int id = sc.nextInt();
+                case 1:
+                    System.out.print("Enter Student ID: ");
+                    int id = sc.nextInt();
 
-                System.out.print("Enter Name: ");
-                String name = sc.next();
+                    System.out.print("Enter Name: ");
+                    String name = sc.next();
 
-                Student s = new Student(name, id, "CSE");
+                    System.out.print("Enter Preference (Single/Double/Triple): ");
+                    String pref = sc.next();
 
-                manager.addStudent(s);
+                    Student s = new Student(name, id, "CSE", pref);
+                    manager.addStudent(s);
 
-                System.out.println("Student added successfully.");
-                break;
-             case 2:
-                System.out.print("Enter Student ID to allocate room: ");
-                int sid = sc.nextInt();
-            
-                break;
+                    System.out.println("Student added successfully.");
+                    break;
 
-             case 3:
-                manager.viewRooms();
-                break;
+                case 2:
+                    manager.viewRooms();
+                    break;
 
-             case 4:
-                manager.viewStudents();   
-                break;
+                case 3:
+                    manager.viewStudents();
+                    break;
 
-             case 5:
-                System.out.println("Exiting...");
-                return;
-
-             default:
-                System.out.println("Invalid choice.");
+                case 4:
+                    return;
             }
         }
     }

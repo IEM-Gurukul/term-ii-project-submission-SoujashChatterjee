@@ -5,7 +5,7 @@ class TripleRoom extends Room {
 
     @Override
     void displayRoomDetails() {
-        System.out.println("Triple Room - Room No: " + roomNumber);
-        System.out.println("Capacity: 3 | Occupied: " + students.size());
+        System.out.println("Triple Room - Room No: " + roomNumber +
+                " | Occupied: " + students.size() + "/3");
     }
 }

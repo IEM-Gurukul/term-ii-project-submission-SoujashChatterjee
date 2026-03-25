@@ -1,76 +1,75 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 class HostelManager {
 
     ArrayList<Student> students = new ArrayList<>();
-    ArrayList<Room> rooms = new ArrayList<>();
+    ArrayList<Floor> floors = new ArrayList<>();
 
-    void addRoom(Room r) {
-        rooms.add(r);
+    void addFloor(Floor f) {
+        floors.add(f);
     }
 
     void addStudent(Student s) {
         students.add(s);
 
-        for (Room r : rooms) {
-            if (!r.isFull()) {
-                r.addStudent(s);
-                System.out.println("Room allocated: " + r.roomNumber);
-                return;
+        ArrayList<Room> preferredRooms = new ArrayList<>();
+
+        for (Floor f : floors) {
+            for (Room r : f.rooms) {
+
+                if (s.getPreference().equalsIgnoreCase("Single") && r instanceof SingleRoom && !r.isFull())
+                    preferredRooms.add(r);
+
+                else if (s.getPreference().equalsIgnoreCase("Double") && r instanceof DoubleRoom && !r.isFull())
+                    preferredRooms.add(r);
+
+                else if (s.getPreference().equalsIgnoreCase("Triple") && r instanceof TripleRoom && !r.isFull())
+                    preferredRooms.add(r);
             }
         }
 
-        System.out.println("No rooms available.");
-    }
+        Random rand = new Random();
 
-    void viewStudents() {
-        if (students.isEmpty()) {
-            System.out.println("No students found.");
+        if (!preferredRooms.isEmpty()) {
+            Room chosen = preferredRooms.get(rand.nextInt(preferredRooms.size()));
+            chosen.addStudent(s);
+            System.out.println("Allocated preferred room: " + chosen.roomNumber);
             return;
         }
 
-        for (Student s : students) {
-            s.displayInfo();
+        ArrayList<Room> availableRooms = new ArrayList<>();
+
+        for (Floor f : floors) {
+            for (Room r : f.rooms) {
+                if (!r.isFull()) {
+                    availableRooms.add(r);
+                }
+            }
+        }
+
+        if (!availableRooms.isEmpty()) {
+            Room chosen = availableRooms.get(rand.nextInt(availableRooms.size()));
+            chosen.addStudent(s);
+            System.out.println("Allocated random room: " + chosen.roomNumber);
+        } else {
+            System.out.println("No rooms available.");
         }
     }
 
     void viewRooms() {
-        if (rooms.isEmpty()) {
-            System.out.println("No rooms available.");
-            return;
-        }
-
-        for (Room r : rooms) {
-            r.displayRoomDetails();
+        for (Floor f : floors) {
+            System.out.println("Floor " + f.floorNumber);
+            for (Room r : f.rooms) {
+                r.displayRoomDetails();
+            }
             System.out.println("----------------------");
         }
     }
 
-    void removeStudent(int id) {
-
-        Student found = null;
-
+    void viewStudents() {
         for (Student s : students) {
-            if (s.getId() == id) {
-                found = s;
-                break;
-            }
-        }
-
-        if (found != null) {
-
-            for (Room r : rooms) {
-                if (r.roomNumber == found.getRoomNumber()) {
-                    r.removeStudent(found);
-                    break;
-                }
-            }
-
-            students.remove(found);
-            System.out.println("Student removed and room updated.");
-
-        } else {
-            System.out.println("Student not found.");
+            s.displayInfo();
         }
     }
 }
