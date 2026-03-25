@@ -10,7 +10,22 @@ class HostelManager {
         floors.add(f);
     }
 
+    boolean isDuplicateId(int id) {
+        for (Student s : students) {
+            if (s.getId() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     void addStudent(Student s) {
+
+        if (isDuplicateId(s.getId())) {
+            System.out.println("Student with this ID already exists.");
+            return;
+        }
+
         students.add(s);
 
         ArrayList<Room> preferredRooms = new ArrayList<>();

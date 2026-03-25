@@ -6,8 +6,11 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         HostelManager manager = new HostelManager();
 
+        FileHandler.loadStudents(manager.students);
+
         Floor f1 = new Floor(1);
         Floor f2 = new Floor(2);
+        Floor f3 = new Floor(3);
 
         f1.addRoom(new SingleRoom(101));
         f1.addRoom(new DoubleRoom(102));
@@ -17,31 +20,77 @@ public class Main {
         f2.addRoom(new DoubleRoom(202));
         f2.addRoom(new TripleRoom(203));
 
+        f3.addRoom(new SingleRoom(301));
+        f3.addRoom(new DoubleRoom(302));
+        f3.addRoom(new TripleRoom(303));
+
         manager.addFloor(f1);
         manager.addFloor(f2);
+        manager.addFloor(f3);
 
         while (true) {
-            System.out.println("\n===== HOSTEL MANAGEMENT SYSTEM =====");
+
+            System.out.println("\n===== HOSTEL SYSTEM =====");
             System.out.println("1. Add Student");
             System.out.println("2. View Rooms");
             System.out.println("3. View Students");
             System.out.println("4. Exit");
 
-            int choice = sc.nextInt();
+            int choice;
+
+            try {
+                choice = sc.nextInt();
+            } catch (Exception e) {
+                System.out.println("Invalid input!");
+                sc.next();
+                continue;
+            }
 
             switch (choice) {
 
                 case 1:
                     System.out.print("Enter Student ID: ");
-                    int id = sc.nextInt();
+                    int id;
+
+                    try {
+                        id = sc.nextInt();
+                    } catch (Exception e) {
+                        System.out.println("Invalid ID!");
+                        sc.next();
+                        break;
+                    }
 
                     System.out.print("Enter Name: ");
                     String name = sc.next();
 
+                    System.out.println("Select Department:");
+                    System.out.println("1. CSE");
+                    System.out.println("2. Mechanical");
+                    System.out.println("3. Electrical");
+                    System.out.println("4. Electronics");
+
+                    int deptChoice = sc.nextInt();
+                    String dept;
+
+                    switch (deptChoice) {
+                        case 1: dept = "CSE"; break;
+                        case 2: dept = "Mechanical"; break;
+                        case 3: dept = "Electrical"; break;
+                        case 4: dept = "Electronics"; break;
+                        default: dept = "CSE";
+                    }
+
                     System.out.print("Enter Preference (Single/Double/Triple): ");
                     String pref = sc.next();
 
-                    Student s = new Student(name, id, "CSE", pref);
+                    if (!(pref.equalsIgnoreCase("Single") ||
+                          pref.equalsIgnoreCase("Double") ||
+                          pref.equalsIgnoreCase("Triple"))) {
+                        System.out.println("Invalid preference. Setting to random.");
+                        pref = "None";
+                    }
+
+                    Student s = new Student(name, id, dept, pref);
                     manager.addStudent(s);
 
                     System.out.println("Student added successfully.");
@@ -56,6 +105,8 @@ public class Main {
                     break;
 
                 case 4:
+                    FileHandler.saveStudents(manager.students);
+                    System.out.println("Data saved. Exiting...");
                     return;
             }
         }
