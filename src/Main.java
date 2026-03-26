@@ -30,14 +30,14 @@ public class Main {
 
         while (true) {
 
-            System.out.println("\n=================================");
-            System.out.println("     HOSTEL MANAGEMENT SYSTEM");
-            System.out.println("=================================");
+            System.out.println("\n===== HOSTEL MANAGEMENT SYSTEM =====");
             System.out.println("1. Add Student");
-            System.out.println("2. View Rooms");
-            System.out.println("3. View Students");
-            System.out.println("4. Clear All Data");
-            System.out.println("5. Exit");
+            System.out.println("2. View Students");
+            System.out.println("3. View Rooms");
+            System.out.println("4. Search Student");
+            System.out.println("5. Remove Student");
+            System.out.println("6. Clear All Data");
+            System.out.println("7. Exit");
             System.out.print("Enter choice: ");
 
             int choice;
@@ -83,7 +83,7 @@ public class Main {
                         if (name.matches("[a-zA-Z]+")) {
                             break;
                         } else {
-                            System.out.println("Invalid name! Only alphabets allowed.");
+                            System.out.println("Invalid name!");
                         }
                     }
 
@@ -95,7 +95,7 @@ public class Main {
                         System.out.println("2. Mechanical");
                         System.out.println("3. Electrical");
                         System.out.println("4. Electronics");
-                        System.out.println("0. None");
+                        System.out.println("0. Skip");
 
                         int deptChoice;
 
@@ -112,7 +112,7 @@ public class Main {
                             case 2: dept = "Mechanical"; break;
                             case 3: dept = "Electrical"; break;
                             case 4: dept = "Electronics"; break;
-                            case 0: dept = "-"; break;
+                            case 0: dept = "NIL"; break;
                             default:
                                 System.out.println("Invalid choice!");
                                 continue;
@@ -126,7 +126,6 @@ public class Main {
                     if (!(pref.equalsIgnoreCase("Single") ||
                           pref.equalsIgnoreCase("Double") ||
                           pref.equalsIgnoreCase("Triple"))) {
-                        System.out.println("Invalid preference. Setting to random.");
                         pref = "None";
                     }
 
@@ -137,19 +136,31 @@ public class Main {
                     break;
 
                 case 2:
-                    manager.viewRooms();
-                    break;
-
-                case 3:
                     manager.viewStudents();
                     break;
 
+                case 3:
+                    manager.viewRooms();
+                    break;
+
                 case 4:
+                    System.out.print("Enter ID to search: ");
+                    int sid = sc.nextInt();
+                    manager.searchStudent(sid);
+                    break;
+
+                case 5:
+                    System.out.print("Enter ID to remove: ");
+                    int rid = sc.nextInt();
+                    manager.removeStudent(rid);
+                    break;
+
+                case 6:
                     manager.clearAllData();
                     FileHandler.clearData();
                     break;
 
-                case 5:
+                case 7:
                     FileHandler.saveStudents(manager.students);
                     System.out.println("Data saved. Exiting...");
                     sc.close();
