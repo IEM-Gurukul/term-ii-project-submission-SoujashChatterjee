@@ -6,6 +6,32 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         HostelManager manager = new HostelManager();
 
+        
+        String role = "user";
+
+        System.out.print("Enter role (admin/user): ");
+        String inputRole = sc.next();
+
+        if (inputRole.equalsIgnoreCase("admin")) {
+
+            System.out.print("Enter username: ");
+            String username = sc.next();
+
+            System.out.print("Enter password: ");
+            String password = sc.next();
+
+            if (username.equals("admin") && password.equals("1234")) {
+                role = "admin";
+                System.out.println("Admin login successful.");
+            } else {
+                System.out.println("Invalid credentials. Logged in as user.");
+            }
+
+        } else {
+            role = "user";
+        }
+
+        
         Floor f1 = new Floor(1);
         Floor f2 = new Floor(2);
         Floor f3 = new Floor(3);
@@ -26,18 +52,20 @@ public class Main {
         manager.addFloor(f2);
         manager.addFloor(f3);
 
+        
         FileHandler.loadStudents(manager.students, manager.floors);
 
         while (true) {
 
             System.out.println("\n===== HOSTEL MANAGEMENT SYSTEM =====");
-            System.out.println("1. Add Student");
+            System.out.println("Role: " + role.toUpperCase());
+            System.out.println("1. Add Student (Admin)");
             System.out.println("2. View Students");
             System.out.println("3. View Rooms");
             System.out.println("4. Search Student");
-            System.out.println("5. Remove Student");
-            System.out.println("6. Change Room");
-            System.out.println("7. Clear All Data");
+            System.out.println("5. Remove Student (Admin)");
+            System.out.println("6. Change Room (Admin)");
+            System.out.println("7. Clear All Data (Admin)");
             System.out.println("8. Exit");
             System.out.print("Enter choice: ");
 
@@ -51,9 +79,17 @@ public class Main {
                 continue;
             }
 
+            
+            if ((choice == 1 || choice == 5 || choice == 6 || choice == 7)
+                    && !role.equalsIgnoreCase("admin")) {
+                System.out.println("Access denied. Admin only feature.");
+                continue;
+            }
+
             switch (choice) {
 
                 case 1:
+
                     int id;
 
                     while (true) {
@@ -83,7 +119,7 @@ public class Main {
                         if (name.matches("[a-zA-Z]+")) {
                             break;
                         } else {
-                            System.out.println("Invalid name!");
+                            System.out.println("Invalid name! Only names allowed.");
                         }
                     }
 
@@ -126,6 +162,7 @@ public class Main {
                     if (!(pref.equalsIgnoreCase("Single") ||
                           pref.equalsIgnoreCase("Double") ||
                           pref.equalsIgnoreCase("Triple"))) {
+                        System.out.println("Invalid preference. Setting to random.");
                         pref = "None";
                     }
 
@@ -134,6 +171,7 @@ public class Main {
 
                     System.out.println("Student added successfully.");
                     break;
+
                 case 2:
                     manager.viewStudents();
                     break;
