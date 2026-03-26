@@ -1,5 +1,5 @@
 123,sou,Mechanical,single,101
 234,deb,Electronics,double,102
 34,sagnik,CSE,triple,103
-45,eshan,Electronics,double,302
+45,eshan,Electronics,double,203
 46,san,NIL,double,102

@@ -16,8 +16,10 @@ class Room {
     }
 
     void addStudent(Student s) {
-        students.add(s);
-        s.setRoom(roomNumber);
+        if (!isFull()) {
+            students.add(s);
+            s.setRoom(roomNumber);
+        }
     }
 
     void removeStudent(Student s) {
@@ -26,7 +28,15 @@ class Room {
 
     void displayRoomDetails() {
         System.out.println("Room No: " + roomNumber);
-        System.out.println("Capacity: " + capacity);
-        System.out.println("Occupied: " + students.size());
+        System.out.println("Occupancy: " + students.size() + "/" + capacity);
+
+        if (students.isEmpty()) {
+            System.out.println("No students assigned.");
+        } else {
+            System.out.println("Students:");
+            for (Student s : students) {
+                System.out.println("- " + s.getName());
+            }
+        }
     }
 }

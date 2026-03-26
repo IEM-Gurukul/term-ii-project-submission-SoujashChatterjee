@@ -105,6 +105,54 @@ class HostelManager {
         System.out.println("Student removed and room vacated.");
     }
 
+    void changeRoom(int id, int newRoomNo) {
+
+        Student found = null;
+
+        for (Student s : students) {
+            if (s.getId() == id) {
+                found = s;
+                break;
+            }
+        }
+
+        if (found == null) {
+            System.out.println("Student not found.");
+            return;
+        }
+
+        Room oldRoom = null;
+        Room newRoom = null;
+
+        for (Floor f : floors) {
+            for (Room r : f.rooms) {
+
+                if (r.roomNumber == found.getRoomNumber()) {
+                    oldRoom = r;
+                }
+
+                if (r.roomNumber == newRoomNo) {
+                    newRoom = r;
+                }
+            }
+        }
+
+        if (newRoom == null) {
+            System.out.println("New room not found.");
+            return;
+        }
+
+        if (newRoom.isFull()) {
+            System.out.println("New room is full.");
+            return;
+        }
+
+        oldRoom.removeStudent(found);
+        newRoom.addStudent(found);
+
+        System.out.println("Room changed successfully.");
+    }
+
     void viewRooms() {
         for (Floor f : floors) {
             System.out.println("Floor " + f.floorNumber);

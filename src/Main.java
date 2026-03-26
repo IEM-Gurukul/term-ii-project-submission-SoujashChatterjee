@@ -36,8 +36,9 @@ public class Main {
             System.out.println("3. View Rooms");
             System.out.println("4. Search Student");
             System.out.println("5. Remove Student");
-            System.out.println("6. Clear All Data");
-            System.out.println("7. Exit");
+            System.out.println("6. Change Room");
+            System.out.println("7. Clear All Data");
+            System.out.println("8. Exit");
             System.out.print("Enter choice: ");
 
             int choice;
@@ -53,7 +54,6 @@ public class Main {
             switch (choice) {
 
                 case 1:
-
                     int id;
 
                     while (true) {
@@ -134,7 +134,6 @@ public class Main {
 
                     System.out.println("Student added successfully.");
                     break;
-
                 case 2:
                     manager.viewStudents();
                     break;
@@ -156,11 +155,21 @@ public class Main {
                     break;
 
                 case 6:
+                    System.out.print("Enter Student ID: ");
+                    int cid = sc.nextInt();
+
+                    System.out.print("Enter New Room Number: ");
+                    int newRoom = sc.nextInt();
+
+                    manager.changeRoom(cid, newRoom);
+                    break;
+
+                case 7:
                     manager.clearAllData();
                     FileHandler.clearData();
                     break;
 
-                case 7:
+                case 8:
                     FileHandler.saveStudents(manager.students);
                     System.out.println("Data saved. Exiting...");
                     sc.close();
