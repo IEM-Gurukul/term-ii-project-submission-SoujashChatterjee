@@ -97,7 +97,7 @@ The system follows a modular layered architecture:
 ---
 
 ## Project Structure
-
+```
 SmartHostelSystem/
 │
 ├── data/
@@ -125,6 +125,7 @@ SmartHostelSystem/
         ├── security/
         │   └── AuthService.java
 
+```
 ---
 
 ## Technical Stack
